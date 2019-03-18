@@ -1,0 +1,35 @@
+Install Node.js
+Install NPM
+
+---------------------------------
+APP PRE-CREATED (BOILER PLATE)
+
+npm install -g create-react-app
+
+then go /create a folder and: 
+
+create-react-app <name>
+cd <name>
+npm start
+-------------------------------------------------------------
+APP CUSTOM (WEBPACK) github.com/LeonidasEsteban/webpack-curso
+->invie -> webpack.config.js & webpack.dev.config.js
+create 2 files into the folder app <name>
+
+inside folder app -> npm init
+
+->invie ->package.json copy devDependencies and scripts to package.json is in the app folder
+remove '^' from all dependencies, example "css-loader": "^0.28.7" -> "css-loader": "0.28.7"
+
+npm install or npm i
+
+->webpack.config.js & webpack.dev.config.js -> change in "entry" object the name of the value
+example: "react-app": path.resolve(__dirname, 'index.js'),
+
+npm install react --save
+npm install react-dom --save
+npm install prop-types --save
+
+
+
+
