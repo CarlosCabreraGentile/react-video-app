@@ -10,7 +10,7 @@ import Home from '../pages/containers/home';
 
 
 //Reference where the element will be rendered
-const app = document.getElementById('app');
+const homeContainer = document.getElementById('home-container');
 
 //What to render and where
 const test = <h1>Test React App</h1>; //Can be put in render(test, app)
@@ -18,4 +18,4 @@ const test = <h1>Test React App</h1>; //Can be put in render(test, app)
 //title:string
 //author:string
 //image:string
-render( <Home data={APIdata} />, app);
+render( <Home data={APIdata} />, homeContainer);
