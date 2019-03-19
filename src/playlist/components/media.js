@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import './media.css';
 import PropTypes from 'prop-types';
 
-class Media extends React.Component{
+class Media extends PureComponent {
     //ES6
     // constructor(props){
     //     super(props)
@@ -35,13 +35,13 @@ class Media extends React.Component{
             <div className="Media" onClick={this.handleClick}>
                 <div className="Media-cover">
                     <img className="Media-image"
-                        src={this.props.image}
+                        src={this.props.cover}
                         alt=""
                         width={260}
                         height={160}
                     />
                     <h3 className="Media-title">{this.props.title}</h3>
-                    <p className="Media-author">{this.state.author}</p>
+                    <p className="Media-author">{this.props.author}</p>
                 </div>
             </div>
         )
@@ -53,7 +53,7 @@ Media.propTypes = {
     //https://reactjs.org/docs/typechecking-with-proptypes.html
     //example function: Proptypes.func
     //example number: Proptypes.number.isRequired check also to be required
-    image: PropTypes.string,
+    cover: PropTypes.string,
     title: PropTypes.string,
     author: PropTypes.string,
     type: PropTypes.oneOf(['audio', 'video'])

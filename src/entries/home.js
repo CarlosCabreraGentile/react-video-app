@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Media from './src/playlist/components/media.js'
+//import Playlist from './src/playlist/components/playlist.js';
+//import APIdata from './src/api.json';
+import Home from '../pages/containers/home';
 
 //To render components into DOM
 //import ReactDOM from 'react-dom';
@@ -16,4 +18,4 @@ const test = <h1>Test React App</h1>; //Can be put in render(test, app)
 //title:string
 //author:string
 //image:string
-render(<Media type="video" title="React App!" author="Carlos Cabrera" image="./images/cover/bitcoin.jpg"/>, app);
+render( <Home />, app);
