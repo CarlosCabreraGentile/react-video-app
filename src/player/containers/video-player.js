@@ -3,39 +3,134 @@ import VideoPlayerLayout from '../components/video-player-layout';
 import Video from '../components/video';
 import Title from '../components/title';
 import PlayPause from '../components/play-pause';
+import Timer from '../components/timer.js';
+import Controls from '../components/video-player-controls.js';
+import ProgressBar from '../components/progress-bar';
+import Spinner from '../components/spinner';
+import Volume from '../components/volume';
 
 class VideoPlayer extends Component {
-  state = {
-    pause: true,
-  }
-  togglePlay = (event) => {
-    this.setState({
-      pause: !this.state.pause
-    })
-  }
-  componentDidMount() {
-    this.setState({
-      pause: (!this.props.autoplay)
-    })
-  }
-  render() {
-    return (
-      <VideoPlayerLayout>
-        <Title
-          title="Esto es un video chido!"
-        />
-        <PlayPause
-          pause={this.state.pause}
-          handleClick={this.togglePlay}
-        />
-        <Video
-          autoplay={this.props.autoplay}
-          pause={this.state.pause}
-          src="http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
-        />
-      </VideoPlayerLayout>
-    )
-  }
+    state = {
+        pause: true,
+        duration: 0,
+        currentTime: 0,
+        loading: false,
+        volume: 1,
+        lastValue: null
+    }
+
+    togglePlay = (event) => {
+        this.setState({
+            pause: !this.state.pause
+        })
+    }
+
+    componentDidMount() {
+        this.setState({
+            pause: (!this.props.autoplay)
+        })
+    }
+
+    handleLoadedMetadata = event => {
+        this.video = event.target;
+        this.setState({
+            duration: this.video.duration
+        });
+    }
+
+    handleTimeUpdate = event => {
+        // console.log(this.video.currentTime)
+        this.setState({
+            currentTime: this.video.currentTime
+        })
+    }
+
+    handleProgressChange = event => {
+        // event.target.value
+        this.video.currentTime = event.target.value
+    }
+
+    handleSeeking = event => {
+        this.setState({
+            loading: true
+        })
+    }
+
+    handleSeeked = event => {
+        this.setState({
+            loading: false
+        })
+
+    }
+
+    handleVolumeToggle = () => {
+        const lastValue = this.video.volume;
+        this.setState({ lastValue })
+        if (this.video.volume !== 0) {
+            this.video.volume = 0
+            this.setState({
+                volume: this.video.volume
+            })
+        } else {
+            this.video.volume = this.state.lastValue
+            this.setState({
+                volume: this.video.volume
+            })
+        }
+    }
+
+    handleVolumeChange = event => {
+        this.video.volume = event.target.value;
+        this.setState(
+            {
+                volume: this.video.volume
+            }
+        )
+    }
+
+    render() {
+        return (
+            <VideoPlayerLayout
+            >
+                <Title
+                    title="Esto es un video!"
+                />
+                <Controls>
+                    <PlayPause
+                        pause={this.state.pause}
+                        handleClick={this.togglePlay}
+                    />
+                    <Timer
+                        duration={this.state.duration}
+                        currentTime={this.state.currentTime}
+                    />
+                    <ProgressBar
+                        duration={this.state.duration}
+                        value={this.state.currentTime}
+                        handleProgressChange={this.handleProgressChange}
+                    />
+                    <Volume
+                        handleVolumeChange={this.handleVolumeChange}
+                        handleVolumeToggle={this.handleVolumeToggle}
+                        volume={this.state.volume}
+                    />
+
+                </Controls>
+                <Spinner
+                    active={this.state.loading}
+                />
+                <Video
+                    autoplay={this.props.autoplay}
+                    pause={this.state.pause}
+                    handleLoadedMetadata={this.handleLoadedMetadata}
+                    handleTimeUpdate={this.handleTimeUpdate}
+                    handleSeeking={this.handleSeeking}
+                    handleSeeked={this.handleSeeked}
+                    src="http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
+                />
+            </VideoPlayerLayout>
+        )
+    }
 }
 
 export default VideoPlayer;
